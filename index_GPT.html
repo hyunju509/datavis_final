@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Arctic Ozone (60N–90N)</title>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <style>
+    body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; margin:24px; }
+    #legend { margin:8px 0 12px; display:inline-flex; gap:8px; align-items:center }
+    .swatch { width:10px; height:10px; border-radius:2px; display:inline-block; background:#4F46E5 }
+    .tooltip{position:absolute;pointer-events:none;background:rgba(0,0,0,.75);color:#fff;padding:6px 8px;border-radius:4px;font-size:12px}
+  </style>
+</head>
+<body>
+
+  <h1 id="title">Arctic (60N–90N) Total Column Ozone — 1979–2024</h1>
+
+  <label>Decade:
+    <select id="range">
+      <option value="all">All</option>
+      <option value="1979-1989">1979–1989</option>
+      <option value="1990-1999">1990–1999</option>
+      <option value="2000-2009">2000–2009</option>
+      <option value="2010-2019">2010–2019</option>
+      <option value="2020-2024">2020–2024</option>
+    </select>
+  </label>
+
+  <div id="legend">
+    <span class="swatch"></span><span>Total column ozone (DU), 60N–90N</span>
+  </div>
+
+  <div id="chart"></div>
+
+  <script src="charts_GPT.js"></script>
+</body>
+</html>

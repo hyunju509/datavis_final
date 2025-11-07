@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Invisible Layers: Ozone & Carbon</title>
+
+  <!-- Google Fonts (Niveau Grotesk 대체용: Plus Jakarta Sans) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+</head>
+
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="content">
+      <h1>The Invisible Layers</h1>
+      <h2>From Ozone Recovery to Carbon Emissions</h2>
+      <p>
+        This project contrasts two atmospheric narratives — how global cooperation through the Montreal Protocol (1987) successfully healed the ozone layer, and how unregulated data center expansion and AI infrastructure are driving new carbon emissions. Together, they reveal how policy can make—or break—the planet’s future climate.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section: Montreal Protocol Timeline -->
+  <section class="section timeline">
+    <h2>The Montreal Protocol: A Timeline of Global Action</h2>
+    <p>
+      The Montreal Protocol, signed in 1987, stands as one of humanity’s greatest environmental successes. It emerged after decades of scientific warnings about chlorofluorocarbons (CFCs), chemicals used in refrigeration and aerosols that were found to destroy the ozone layer. Through global cooperation, nations phased out these substances, leading to the gradual healing of the ozone layer — a rare proof that science, policy, and collective action can reverse planetary damage.
+    </p>
+    <p>
+      The Protocol continues to evolve, adjusting to new findings and technologies. Subsequent amendments, such as the London and Kigali Amendments, expanded its reach to include additional substances like hydrochlorofluorocarbons (HCFCs) and hydrofluorocarbons (HFCs). Its success shows how international regulation can translate data into environmental recovery — a model for addressing today’s unregulated carbon emissions.
+    </p>
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <span class="year">1974</span>
+        <p>Mario Molina and F. Sherwood Rowland <strong>discover that CFCs destroy ozone molecules</strong>, marking the beginning of modern atmospheric chemistry awareness.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">1985</span>
+        <p><strong>Vienna Convention for the Protection of the Ozone Layer</strong> is adopted, establishing a scientific and legal framework for international cooperation.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">1987</span>
+        <p><strong>The Montreal Protocol is signed</strong> by 46 countries, committing to phase out ozone-depleting substances like CFCs and halons.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">1990</span>
+        <p><strong>London Amendments strengthen phaseout deadlines</strong> and provide funding for developing nations to transition away from harmful chemicals.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">2016</span>
+        <p><strong>Kigali Amendment expands the Protocol</strong> to include HFCs, linking ozone recovery with climate action by targeting greenhouse gases.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">2024</span>
+        <p>NASA and WMO confirm <strong>record ozone recovery over Antarctica</strong>, projecting near-complete restoration of pre-1980 ozone levels by mid-century.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Ozone -->
+  <section class="section">
+    <h2>Ozone Recovery After the Montreal Protocol</h2>
+    <p>
+      The Montreal Protocol (1987) stands as one of the most successful international environmental agreements in history. It banned ozone‑depleting substances such as CFCs and halons, leading to a measurable recovery of the ozone layer in just a few decades. Using NASA satellite data (MOD, OMI), we visualize this long‑term improvement in global ozone concentration from 1979 to today.
+    </p>
+    <div class="ozone-video">
+      <video controls autoplay muted loop style="width:100%;border-radius:12px;margin:20px 0;">
+        <source src="assets/OzoneWatching.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p style="font-size:0.9rem;color:#555;margin-top:8px;">Source: NASA Ozone Watch — Global Ozone Distribution (1979–2024)</p>
+    </div>
+    <p style="font-size:0.95rem;color:#333;">This animation shows the shrinking of the ozone hole and the gradual stabilization of global ozone distribution since the 1980s.</p>
+    <div id="ozone-chart-block">
+      <h3 id="title">Global Total Column Ozone — 1979–2024</h3>
+
+      <label>Decade:
+        <select id="range">
+          <option value="all">All</option>
+          <option value="1979-1989">1979–1989</option>
+          <option value="1990-1999">1990–1999</option>
+          <option value="2000-2009">2000–2009</option>
+          <option value="2010-2019">2010–2019</option>
+          <option value="2020-2024">2020–2024</option>
+        </select>
+      </label>
+
+      <div id="legend">
+        <span class="swatch"></span><span>Global total column ozone (DU)</span>
+      </div>
+
+      <div id="chart"></div>
+      <p style="font-size:0.9rem;color:#444;margin-top:12px;max-width:none;">
+        <strong>About this data:</strong> The graph shows the global mean total column ozone measured in 
+        <em>Dobson Units (DU)</em>. One DU represents a 0.01 mm thick layer of pure ozone at standard conditions. 
+        Higher DU values mean stronger UV protection, while lower DU indicates depletion. 
+        The decline in the 1980s–1990s corresponds to widespread CFC use, while the recovery since 2000 reflects 
+        the effects of the <em>Montreal Protocol</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 1.5: Ozone Time Map (Interactive) -->
+  <section class="section" id="ozone-map-section">
+    <h2>Spatial Recovery: Ozone Distribution Over Time</h2>
+    <p>
+      Scroll through time to see how policy turned data into progress. The global ozone map highlights key milestones — from the ozone hole’s peak in the late 1980s to its partial recovery after international regulations took effect.
+    </p>
+
+    <div class="scrolly">
+      <div class="graphic">
+        <div id="ozoneTimeMap"></div>
+        <div class="controls">
+          <label for="yearSlider" style="color:#043b83;font-weight:600;">Year</label>
+          <input type="range" id="yearSlider" min="1979" max="2024" step="1" value="1979" />
+          <span id="yearLabel" style="min-width:48px;display:inline-block;">1979</span>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step" data-year="1987"><strong>1987 — Montreal Protocol</strong><br/>Global treaty to phase out ozone‑depleting substances.</div>
+        <div class="step" data-year="2000"><strong>2000 — Early Recovery</strong><br/>Signs of stabilization and recovery begin to appear.</div>
+        <div class="step" data-year="2023"><strong>2023 — Ongoing Recovery</strong><br/>Marked reduction in the Antarctic ozone hole compared to the 1990s.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Data Centers -->
+  <section class="section">
+    <h2>The Rise of Data Centers and CO₂</h2>
+    <p>
+      The digital revolution has brought an invisible footprint. Data centers — the physical engines behind AI and cloud computing — now account for a rapidly increasing share of global energy use. Yet unlike ozone‑depleting substances, these infrastructures remain largely unregulated, consuming vast amounts of electricity and water, and producing CO₂ emissions concentrated in specific regions across the U.S.
+    </p>
+    <div class="viz-placeholder">[CO₂ Map or Bubble Chart Here]</div>
+  </section>
+
+  <!-- Section 3: Comparison -->
+  <section class="section">
+    <h2>Regulated vs Unregulated</h2>
+    <p>
+      The Montreal Protocol shows that collective regulation works — over 190 nations agreed to phase out ozone‑depleting chemicals, and the results are visible in the atmosphere today. In contrast, carbon emissions from digital infrastructure continue to rise without consistent global or national policy frameworks. Through our visualization, we compare how policy enforcement versus policy absence shapes the trajectory of environmental recovery.
+    </p>
+    <div class="viz-placeholder">[Dual Comparison Graphic Here]</div>
+    
+  </section>
+
+  <!-- Section 4: Conclusion -->
+  <section class="section conclusion">
+    <h2>Policy Works — When It Exists</h2>
+    <p>
+      The ozone layer’s recovery is proof that science‑based policy can heal the planet. As we enter a new era of digital expansion, the same urgency and cooperation are needed to govern the invisible emissions of the AI age. If policy worked once — it can work again.
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2025 The Green Team — Columbia GSAPP Data Visualization</p>
+  </footer>
+  <script src="ozone_charts.js"></script>
+  <script>window.MAPBOX_TOKEN = 'YOUR_MAPBOX_TOKEN';</script>
+  <script src="script.js"></script>
+  </body>
+  </html>
