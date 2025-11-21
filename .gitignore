@@ -1,0 +1,9 @@
+# 원본 초대형 CSV들은 Git에 올리지 않기
+dataset/energy_nyc_20.csv
+dataset/energy_nyc_21.csv
+dataset/energy_nyc_22_23.csv
+dataset/monthly_20_23.csv
+dataset/emissions.csv
+dataset/ozone_monthly_avg.csv
+# venv 같은 것도 혹시 있으면
+.venv/

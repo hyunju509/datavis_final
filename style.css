@@ -1,0 +1,358 @@
+/* ==== Global Settings ==== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Plus Jakarta Sans", "Niveau Grotesk", sans-serif;
+  }
+  
+  html, body {
+    scroll-behavior: smooth;
+    font-family: "Plus Jakarta Sans", "Niveau Grotesk", sans-serif;
+    color: #111;
+    background-color: #f9fafc;
+  }
+  
+  /* ==== Sections ==== */
+  section {
+    padding: 100px 12%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  h1, h2 {
+    color: #043b83;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  p {
+    max-width: none;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  /* ==== Hero Section ==== */
+  .hero {
+    background: linear-gradient(180deg, #eaf3ff 0%, #ffffff 100%);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero .content {
+    max-width: 800px;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+    letter-spacing: -1px;
+  }
+  
+  .hero h2 {
+    font-weight: 500;
+    color: #1565c0;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    color: #444;
+    font-size: 1.1rem;
+  }
+  
+  /* ==== Visualization Placeholder ==== */
+  .viz-placeholder {
+    background-color: #eaf3ff;
+    border: 2px dashed #4a90e2;
+    border-radius: 12px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #043b83;
+    font-weight: 600;
+  }
+  
+  /* ==== Conclusion Section ==== */
+  .conclusion {
+    background-color: #edf3fb;
+    text-align: center;
+  }
+  
+  .conclusion h2 {
+    color: #043b83;
+  }
+  
+  .conclusion p {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* ==== Footer ==== */
+  footer {
+    background: #043b83; /* deep blue */
+    color: #ffffff;      /* white text */
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+  }
+
+#ozone-charts-block label {
+  color: #043b83;
+  font-weight: 600;
+}
+#ozone-charts-block select {
+  padding: 6px 8px;
+  border: 1px solid #a4c2f4;
+  border-radius: 6px;
+  background-color: #eaf3ff;
+  color: #043b83;
+  font-weight: 500;
+}
+#chart svg {
+  max-width: 100%;
+  height: auto;
+}
+#chart .bar {
+  transition: fill 0.2s ease;
+}
+
+/* hover color is handled in D3, so no :hover fill here */
+
+.legend { margin:8px 0 12px; display:inline-flex; gap:8px; align-items:center }
+.swatch { width:10px; height:10px; border-radius:2px; display:inline-block; background:#1565c0}
+.tooltip { position:absolute; pointer-events:none; background:rgba(0,0,0,.85); color:#fff; padding:6px 8px; border-radius:4px; font-size:12px; z-index:9999 }
+
+
+/* ===== Montreal Protocol Timeline Styles ===== */
+.timeline { position: relative; }
+.timeline-container {
+  position: relative;
+  margin-top: 24px;
+  padding-left: 40px; /* room for dots */
+}
+/* vertical spine */
+.timeline-container::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #4a90e2 0%, #043b83 100%);
+  border-radius: 2px;
+  opacity: 0.9;
+}
+.timeline-item {
+  position: relative;
+  padding: 14px 16px 14px 18px;
+  background: #eaf3ff;
+  border: 1px solid #a4c2f4;
+  border-radius: 12px;
+  margin: 14px 0 14px 0;
+  box-shadow: 0 1px 0 rgba(4,59,131,0.06);
+  transform: translateY(8px);
+  opacity: 0;
+  transition: opacity .45s ease, transform .45s ease;
+}
+/* dot marker */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: calc(10px - 40px - 8px); /* moved 1px left (dotHalf 7px -> 8px) */
+  top: 22px;
+  transform: translateY(-50%);
+  width: 14px; height: 14px;
+  background: #1565c0;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 3px rgba(74,144,226,0.35);
+  border-radius: 50%;
+  z-index: 2;                 /* render above the spine */
+}
+.timeline-item .year {
+  display: inline-block;
+  min-width: 60px;
+  color: #043b83;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin-right: 8px;
+}
+.timeline-item p { margin: 6px 0 0; color:#2f3a4a; }
+
+/* reveal when in view */
+.timeline-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 800px) {
+  .timeline-container { padding-left: 24px; }
+  .timeline-item::before { left: calc(10px - 24px - 8px); }
+}
+/* ===== Ozone Time Map (Mapbox) Scrolly Layout ===== */
+.scrolly {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.graphic {
+  position: static;
+  top: auto;
+}
+.scrolly .graphic {
+  position: static;
+  height: auto !important;
+  margin-bottom: 24px;
+}
+
+#ozoneTimeMap {
+  width: 100%;
+  height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.step {
+  background: #eaf3ff;
+  border: 1px solid #a4c2f4;
+  border-radius: 10px;
+  padding: 16px;
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .scrolly {
+    grid-template-columns: 1fr;
+  }
+  .graphic {
+    position: relative;
+    top: auto;
+  }
+}
+
+#map {
+  width: 100%;
+  height: 800px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#energychart {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+#energychart svg {
+  margin: 0 auto;
+}
+
+/* Ozone bar chart title spacing */
+#title {
+  margin-bottom: 1.2rem;  /* 필요하면 1rem, 1.2rem 이런 식으로 조절 */
+}
+
+#white{
+  color:white
+}
+
+#ozoneTimeMap {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 16px auto;
+}
+
+#ozoneTimeMap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+#yearSlider {
+  width: 100%;
+}
+
+.scrolly {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+  height: auto !important;
+}
+
+.scrolly .graphic {
+  position: static;
+  height: auto !important;
+  margin-bottom: 0;
+}
+
+#ozoneTimeMap {
+  margin-bottom: 0;
+}
+
+.references {
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.references h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #043b83;
+}
+
+.references ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.references li {
+  margin-bottom: 4px;
+}
+
+.data-source {
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 10px;
+  line-height: 1.5;
+  max-width: 100%;
+}
+
+.data-source a {
+  color: #043b83;
+  text-decoration: underline;
+}
+
+/* Ozone source spacing control */
+.ozone-source {
+  margin-top: 8px;  /* 사진 아래 여백 — 필요하면 더 줄여도 돼 */
+}
+
+.ozone-source-text {
+  margin-top: 0;    /* 기본 data-source의 위쪽 마진 제거 */
+}

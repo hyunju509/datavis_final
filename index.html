@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Invisible Layers: Ozone & Carbon</title>
+
+  <!-- Google Fonts (Niveau Grotesk 대체용: Plus Jakarta Sans) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+</head>
+
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="content">
+      <h1>The Invisible Layers</h1>
+      <h2>From Ozone Recovery to Carbon Emissions</h2>
+      <p>
+        This project contrasts two atmospheric narratives: how global cooperation through the Montreal Protocol (1987) has helped the ozone layer recover, and how unregulated data center and AI infrastructure are driving new carbon emissions. Read together, they show how policy can either repair the atmosphere or lock in future climate risk.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section: Montreal Protocol Timeline -->
+  <section class="section timeline">
+    <h2>The Montreal Protocol: A Timeline of Global Action</h2>
+    <p>
+      The Montreal Protocol, signed in 1987, is often described as one of humanity’s most successful environmental treaties. It followed decades of scientific warnings about chlorofluorocarbons (CFCs), chemicals used in refrigeration and aerosols that were found to destroy the ozone layer. Through coordinated global action, nations agreed to phase out these substances, and satellite data now shows a gradual healing of the ozone layer — clear evidence that science, regulation, and collective action can reverse planetary damage.
+    </p>
+    <p>
+      The Protocol has continued to evolve as science and technology have advanced. Amendments such as those adopted in London and Kigali expanded its scope to include additional substances like hydrochlorofluorocarbons (HCFCs) and hydrofluorocarbons (HFCs). This living framework shows how international regulation can translate data into environmental recovery — a precedent for today’s challenge of governing carbon emissions from energy‑intensive digital infrastructure.
+    </p>
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <span class="year">1974</span>
+        <p>Mario Molina and F. Sherwood Rowland <strong>discover that CFCs destroy ozone molecules</strong>, marking the beginning of modern atmospheric chemistry awareness.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">1985</span>
+        <p><strong>Vienna Convention for the Protection of the Ozone Layer</strong> is adopted, establishing a scientific and legal framework for international cooperation.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">1987</span>
+        <p><strong>The Montreal Protocol is signed</strong> by 46 countries, committing to phase out ozone-depleting substances like CFCs and halons.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">1990</span>
+        <p><strong>London Amendments strengthen phaseout deadlines</strong> and provide funding for developing nations to transition away from harmful chemicals.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">2016</span>
+        <p><strong>Kigali Amendment expands the Protocol</strong> to include HFCs, linking ozone recovery with climate action by targeting greenhouse gases.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">2024</span>
+        <p>NASA and WMO confirm <strong>record ozone recovery over Antarctica</strong>, projecting near-complete restoration of pre-1980 ozone levels by mid-century.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Ozone -->
+  <section class="section">
+    <h2>Ozone Recovery After the Montreal Protocol</h2>
+    <p>
+      The Montreal Protocol (1987) is widely recognized as one of the most effective international environmental agreements. By banning ozone‑depleting substances such as CFCs and halons, it set in motion a measurable recovery of the ozone layer within just a few decades. Using NASA satellite products (merged MOD data and OMI observations), we visualize the long‑term change in global ozone concentration from the late 1970s to the present.
+    </p>
+    
+    <div id="ozone-chart-block">
+      <h3 id="title">Global Total Column Ozone — 1979–2024</h3>
+
+      <label>Decade:
+        <select id="range">
+          <option value="all">All Years</option>
+          <option value="pre-montreal">Before Montreal Protocol (1970–1986)</option>
+          <option value="post-montreal">After Montreal — Peak Depletion (1987–1999)</option>
+          <option value="early-recovery">Early Recovery (2000–2009)</option>
+          <option value="recent-recovery">Recent Recovery (2010–2024)</option>
+        </select>
+      </label>
+
+      <div id="legend">
+        <span class="swatch"></span><span>Global total column ozone (DU)</span>
+      </div>
+
+      <div id="chart"></div>
+      <p style="font-size:0.9rem;color:#444;margin-top:12px;max-width:none;">
+        <strong>About this data:</strong> The graph shows the global mean total column ozone measured in 
+        <em>Dobson Units (DU)</em>. One DU represents a 0.01 mm‑thick layer of pure ozone at standard conditions. 
+        Higher DU values mean stronger protection from ultraviolet radiation, while lower DU values indicate depletion. 
+        The decline in the 1980s–1990s corresponds to widespread CFC use, while the stabilization and recovery after 2000 reflect 
+        the atmospheric impact of the <em>Montreal Protocol</em>.
+      </p>
+      <p class="data-source">
+        <strong>Data source:</strong>
+        NASA Ozone Watch total column ozone products (1979–2024), aggregated into annual global means
+        using processed MOD/OMI datasets.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 1.5: Ozone Time Map (Interactive) -->
+  <section class="section" id="ozone-map-section">
+    <h2>Spatial Recovery: Ozone Distribution Over Time</h2>
+    <p>
+      Scroll through time to see how policy turned atmospheric data into visible change.
+      This global ozone map highlights key milestones — from the peak depletion years
+      to signs of atmospheric recovery after the Montreal Protocol.
+    </p>
+  
+    <div class="scrolly">
+      <div class="graphic">
+        <div id="ozoneTimeMap">
+          <img
+            id="ozoneTimeImage"
+            src="ozone_images/ozone_1979.png"
+            alt="Global ozone map for selected year"
+          />
+          <!-- Slider controls (moved inside the ozoneTimeMap container) -->
+          <div class="controls">
+            <label for="yearSlider" style="color:#043b83;font-weight:600;">Year</label>
+            <input
+              type="range"
+              id="yearSlider"
+              min="1979"
+              max="2024"
+              step="1"
+              value="1987"
+            />
+            <span id="yearLabel" style="min-width:48px;display:inline-block;">1970</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Steps (optional) -->
+      <div class="steps">
+        <div class="step" data-year="1987"><strong>1987 — Montreal Protocol</strong><br>Global treaty to phase out ozone-depleting substances.</div>
+        <div class="step" data-year="2000"><strong>2000 — Early Recovery</strong><br>Signs of stabilization and recovery begin to appear.</div>
+        <div class="step" data-year="2023"><strong>2023 — Ongoing Recovery</strong><br>Marked improvement compared to peak depletion years.</div>
+      </div>
+    </div>
+    <div class="ozone-source">
+      <p class="data-source ozone-source-text">
+        <strong>Data source:</strong>
+        Ozone distribution images adapted from
+        <a href="https://ozonewatch.gsfc.nasa.gov" target="_blank" rel="noopener noreferrer">NASA Ozone Watch</a>
+        Antarctic ozone visualizations (1979–2024).
+      </p>
+    </div>
+  </section>
+
+  <!-- Section: Data Center Map -->
+  <section class="section" id="data-center-map">
+    <h2>Where Are Data Centers Located?</h2>
+    <p>
+      This interactive map shows the distribution of data centers. As part of our comparison,
+      it makes the usually invisible footprint of digital infrastructure visible in space.
+    </p>
+
+    <div id="map" style="width:100%; height:600px; border-radius:12px; margin:0px 0;"></div>
+    <p class="data-source">
+      <strong>Data source:</strong>
+      Geocoded NYC data centers derived from
+      NYC Building Energy and Water Data Disclosure for Local Law 84 (2020–2024).
+    </p>
+  </section>
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="map.js"></script>
+
+  <!-- Section 2: Data Centers -->
+  <section class="section">
+    <h2>The Rise of Data Centers and CO₂</h2>
+    <p>
+      The digital revolution has created a new kind of invisible footprint. Data centers — the physical engines behind AI and cloud computing — account for a rapidly growing share of global electricity demand. Unlike ozone‑depleting chemicals, this infrastructure is still largely unregulated, concentrating energy use, water consumption, and CO₂ emissions in specific regions across the U.S.
+    </p>
+    <div class="data-center-chart">
+      <canvas id="myChart" height="130" ></canvas>
+    </div>
+
+    <p class="data-source">
+      <strong>Data sources:</strong>
+      data center statistics from
+      <em>The Environmental Footprint of Data Centers in the United States</em>
+      (Md Abu Bakar Siddik, Arman Shehabi, Landon Marston) and
+      <em>Environmental Burden of United States Data Centers in the Artificial Intelligence Era</em>
+      (Gianluca Guidi, Francesca Dominici, Jonathan Gilmour, Kevin Butler, Eric Bell,
+      Scott Delaney, Falco J. Bargagli-Stoffi).  
+      Country-level data center counts from
+      <a href="https://www.statista.com/statistics/1228433/data-centers-worldwide-by-country/"
+         target="_blank" rel="noopener noreferrer">
+        Statista – “Data centers worldwide by country”
+      </a>.
+    </p>
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('myChart');
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['US', 'UK', 'GER', 'CHN', 'FRA', 'CAN', 'AUS', 'IND', 'JPN', 'ITL'],
+          datasets: [{
+            label: 'Data Centers Per Country',
+            data: [4165, 499, 487, 381, 321, 293, 274, 271, 242, 209],
+            backgroundColor: '#1565C0',
+            borderColor: '#1565C0',
+            hoverBackgroundColor: '#043b83',
+            borderWidth: 3,
+            barThickness: 15,
+            categoryPercentage: 0.3,
+            barPercentage: 0.9,
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          scales: {
+            x: {
+              grid: { drawOnChartArea: false }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { drawOnChartArea: false }
+            }
+                
+          }
+        }
+      });
+    </script>
+  </section>
+
+  <!-- Section: NYC Data Center Energy Line Chart -->
+  <section class="section" id="energychart">
+    <h2>NYC Data Center Energy Footprint</h2>
+    <p>
+      This chart visualizes the energy use trend of data centers in New York City,
+      linking local infrastructure to the broader national and global carbon‑emissions narrative.
+    </p>  
+
+    <div id="nycChartContainer" style="margin-top:20px;">
+      <h3 style="color:#043b83; margin-bottom:12px;">NYC Data Center Energy Line Chart</h3>
+      <div id="nycLineChart"></div>
+    </div>
+
+    <p class="data-source">
+      <strong>Data source:</strong>
+      NYC Building Energy and Water Data Disclosure for Local Law 84 (2020–2024).
+    </p>
+
+    <script>
+      window.NYC_LINECHART_TARGET = "nycLineChart";
+    </script>
+    <script src="linechart.js"></script>
+  </section>
+
+  <!-- Section 3: Comparison -->
+  <section class="section">
+    <h2>Regulated vs Unregulated</h2>
+    <p>
+      The Montreal Protocol shows that collective regulation works: over 190 nations agreed to phase out ozone‑depleting chemicals, and the results are visible in the atmosphere today. In contrast, carbon emissions from digital infrastructure continue to rise without consistent global or national policy frameworks. Our visualizations compare how the presence of strong policy versus its absence shapes the trajectory of atmospheric change and environmental recovery.
+    </p>
+    
+  </section>
+
+  <!-- Section 4: Conclusion -->
+  <section class="section conclusion">
+    <h2>Policy Works — When It Exists</h2>
+    <p>
+      The ozone layer’s recovery is proof that science‑based policy can shift the atmosphere onto a new path. As we enter a new era of data‑driven and AI‑driven growth, the same urgency and cooperation are needed to govern the emissions of the digital age. If coordinated policy worked once, it can work again — but only if it is extended to the infrastructures that are now driving carbon emissions.
+    </p>
+  </section>
+
+  <footer>
+    <p id="white">© 2025 The Green Team — Columbia GSAPP Data Visualization</p>
+  </footer>
+  <script src="ozone_charts.js"></script>
+  <script src="scrolly_ozone.js"></script>
+  <script src="script.js"></script>
+  </body>
+  </html>
