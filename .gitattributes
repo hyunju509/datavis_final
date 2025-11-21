@@ -1,5 +1,0 @@
-dataset/energy_nyc_22_23.csv filter=lfs diff=lfs merge=lfs -text
-dataset/monthly_20_23.csv filter=lfs diff=lfs merge=lfs -text
-dataset/energy_nyc_20.csv filter=lfs diff=lfs merge=lfs -text
-dataset/energy_nyc_21.csv filter=lfs diff=lfs merge=lfs -text
-dataset/*.csv filter=lfs diff=lfs merge=lfs -text
