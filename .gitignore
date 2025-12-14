@@ -7,3 +7,8 @@ dataset/emissions.csv
 dataset/ozone_monthly_avg.csv
 # venv 같은 것도 혹시 있으면
 .venv/
+# local data
+/dataset/energy_nyc_22_23_24.csv
+
+# python venv
+/.venv/
